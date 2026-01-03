@@ -12,7 +12,12 @@
     "resolveJsonModule": true,
     "moduleResolution": "Bundler",
     "useDefineForClassFields": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@utils/*": [
+        "./src/utils/*"
+      ]
+    }
   },
   "include": [
     "**/*.ts",

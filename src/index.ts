@@ -1,22 +1,16 @@
-function ErrorResponse(status: number, message: string) {
-	return new Response(JSON.stringify({ status, message }), {
-		status,
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-}
+import { errorResponse } from "@utils/response";
+
 async function handleRequest(request: Request) {
 	try {
 		// check method
 		if (request.method === "GET") {
-			return ErrorResponse(405, "Method Not Allowed");
+			return errorResponse(405);
 		}
 		// check params
 		const requestParams = new URL(request.url).searchParams;
 		const targetUrl = requestParams.get("url");
 		if (!targetUrl) {
-			return ErrorResponse(400, "Bad Request");
+			return errorResponse(400);
 		}
 		// fetch
 		const targetResponse = await fetch(targetUrl, {
@@ -32,7 +26,7 @@ async function handleRequest(request: Request) {
 			headers: targetResponseHeaders,
 		});
 	} catch (error) {
-		return ErrorResponse(500, "Internal Server Error");
+		return errorResponse(500, error);
 	}
 }
 
